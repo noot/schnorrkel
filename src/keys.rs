@@ -991,4 +991,17 @@ mod test {
         let public_from_secret: PublicKey = secret.to_public();
         assert!(public_from_mini_secret == public_from_secret);
     }
+
+    #[test]
+    fn test_expand_ed25519() {
+        let input_bytes: [u8; 32] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2];
+        match MiniSecretKey::from_bytes(&input_bytes) {
+            Ok(msc) => {
+                println!("msc : {:?}", msc.to_bytes());
+                let kp: Keypair = msc.expand_to_keypair(ExpansionMode::Ed25519);
+                println!("kp: {:?}", kp)
+            },
+            Err(err) => println!("{:?}", err)
+        }
+    }
 }
